@@ -2,7 +2,7 @@ import argparse
 import os
 import json
 
-from utils import process_json, save_to_output
+from utils import processing_pipeline
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -20,11 +20,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     input_filepath = args.input_file
+    output_filepath = args.output_file
     with os.open(input_filepath, "r") as input_file:
-        if input_filepath.endswith(".json"):
-            processed_string = process_json(input_file)
-            save_to_output(processed_string, args.output_file)
-        elif input_filepath.endswith(".md"):
-            print("Currently not supported input filetype!")
-        elif input_filepath.endswith(".tex"):
-            print("Currently not supported input filetype!")
+        processing_pipeline(input_file=input_file, input_filepath=input_filepath, output_filepath=output_filepath)
