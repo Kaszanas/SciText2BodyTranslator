@@ -49,9 +49,9 @@ def parse_json(input_file):
     json_contents = json.load(input_file)
 
     parsed_content_list = []
-    for section_object in json_contents:
+    for paragraph_object in json_contents["content"]:
 
-        section_level = 0
+        section_level = ""
         if "sectionLevel" in paragraph_object:
             section_level = paragraph_object["sectionLevel"]
 
@@ -90,20 +90,22 @@ def parse_latex():
 
 def prepare_latex_string(input_object, template_string: str) -> str:
 
-    template = Template(template_string)
-
     result_string = ""
     for section_title, section_level, paragraph_body, citation_list in input_object:
+        template = Template(template_string)
 
-        if section_level == 1:
+        formatted_string = ""
+        if section_level == "1":
             citation_string = format_latex_citations(citation_list=citation_list)
-            template.substitute(
+            formatted_string = template.safe_substitute(
                 section_title=section_title,
                 paragraph_body=paragraph_body,
                 citation_string=citation_string,
             )
 
-    return template.__str__()
+            result_string += formatted_string
+
+    return result_string
 
 
 def format_latex_citations(citation_list: List) -> str:
@@ -111,6 +113,8 @@ def format_latex_citations(citation_list: List) -> str:
     citation_string = ""
     for citation in citation_list:
         citation_string += f"{citation}, "
+
+    citation_string = citation_string.rstrip(", ")
 
     return citation_string
 

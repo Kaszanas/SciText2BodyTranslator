@@ -1,13 +1,21 @@
 {
     "content": [
         {
-            "sectionName": "Test Section Name Here",
+            "sectionTitle": "Test Section Name Here",
             "sectionLevel": "1",
-            "paragraphBody": "This is a sample paragraph body text with some random citations",
+            "paragraphBody": "This is a sample paragraph body text with some random citations.",
             "citations": [
                 "Bialecki2021",
                 "ArenaGamer2021",
                 "FollowIndyStarCraft2020"
+            ]
+        },
+        {
+            "sectionTitle": "Another Test Section",
+            "sectionLevel": "1",
+            "paragraphBody": "Yet another test section that will be used for testing.",
+            "citations": [
+                "Bialecki2021"
             ]
         }
     ]
