@@ -1,12 +1,10 @@
 import json
 import logging
-
 from string import Template
-
-from string_templates import LatexTemplates
-
-
 from typing import List
+
+from Document import Document
+from string_templates import LatexTemplates
 
 
 def processing_pipeline(input_file, input_filepath: str, output_filepath: str):
@@ -50,39 +48,42 @@ def parse_json(input_file):
     # Parse the JSON information and depending on the output filetype prepare the
     json_contents = json.load(input_file)
 
+    document = Document()
+
     parsed_content_list = []
-    for paragraph_object in json_contents["content"]:
+    for section_object in json_contents["content"]:
 
-        if "sectionLevel" not in paragraph_object:
-            logging.error("sectionLevel key not found in the input json!")
-            return [], False
-        section_level = paragraph_object["sectionLevel"]
-
-        if "sectionTitle" not in paragraph_object:
+        if "sectionTitle" not in section_object:
             logging.error("sectionTitle key not found in the input json!")
             return [], False
+        section_title = section_object["sectionTitle"]
 
-        section_title = paragraph_object["sectionTitle"]
+        if "sectionLevel" not in section_object:
+            logging.error("sectionLevel key not found in the input json!")
+            return [], False
+        section_level = section_object["sectionLevel"]
 
-        if "paragraphBody" not in paragraph_object:
+        if "paragraphBody" not in section_object:
             logging.error("paragraphBody not found in the input json!")
             return [], False
 
-        paragraph_body = []
-        for sentence in paragraph_object["paragraphBody"]:
+        section_body = []
+        for sentence in section_object["paragraphBody"]:
             if "sentence" not in sentence:
                 logging.error("paragraphBody object does not contain 'sentence' key!")
                 return [], False
             if "citations" not in sentence:
                 logging.error("paragraphBody object does not contain 'citations' key!")
                 return [], False
-            paragraph_body.append(sentence)
+            section_body.append(sentence)
 
-        parsed_content_list.append(
-            (section_title, section_level, paragraph_body, citations)
+        document.add_section(
+            section_title=section_title,
+            section_level=section_level,
+            paragraph_body=section_body,
         )
 
-    return parsed_content_list, True
+    return document, True
 
 
 def save_to_output(string_to_save: str, output_filepath: str):
@@ -99,10 +100,10 @@ def parse_latex():
     return ""
 
 
-def prepare_latex_string(input_object) -> str:
+def prepare_latex_string(document_class: Document) -> str:
 
     result_string = ""
-    for section_title, section_level, paragraph_body, citation_list in input_object:
+    for section_title, section_level, paragraph_body, citation_list in document_class:
         template = Template(LatexTemplates.SECTION_TEMPLATE)
 
         formatted_string = ""
