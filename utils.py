@@ -1,6 +1,10 @@
 import json
+import logging
+
 from string import Template
-from string_templates import SECTION_TEMPLATE
+
+from string_templates import LatexTemplates
+
 
 from typing import List
 
@@ -25,9 +29,7 @@ def processing_pipeline(input_file, input_filepath: str, output_filepath: str):
     # Handling different output filetypes:
     if output_filepath.endswith(".tex"):
         # perform the function
-        string_to_save = prepare_latex_string(
-            input_object=processed_json, template_string=SECTION_TEMPLATE
-        )
+        string_to_save = prepare_latex_string(input_object=processed_json)
         save_to_output(string_to_save, output_filepath)
     elif output_filepath.endswith(".md"):
         print("Output filetype not supported yet!")
@@ -51,27 +53,36 @@ def parse_json(input_file):
     parsed_content_list = []
     for paragraph_object in json_contents["content"]:
 
-        section_level = ""
-        if "sectionLevel" in paragraph_object:
-            section_level = paragraph_object["sectionLevel"]
+        if "sectionLevel" not in paragraph_object:
+            logging.error("sectionLevel key not found in the input json!")
+            return [], False
+        section_level = paragraph_object["sectionLevel"]
 
-        section_title = ""
-        if "sectionTitle" in paragraph_object:
-            section_title = paragraph_object["sectionTitle"]
+        if "sectionTitle" not in paragraph_object:
+            logging.error("sectionTitle key not found in the input json!")
+            return [], False
 
-        paragraph_body = ""
-        if "paragraphBody" in paragraph_object:
-            paragraph_body = paragraph_object["paragraphBody"]
+        section_title = paragraph_object["sectionTitle"]
 
-        citations = []
-        if "citations" in paragraph_object:
-            citations = paragraph_object["citations"]
+        if "paragraphBody" not in paragraph_object:
+            logging.error("paragraphBody not found in the input json!")
+            return [], False
+
+        paragraph_body = []
+        for sentence in paragraph_object["paragraphBody"]:
+            if "sentence" not in sentence:
+                logging.error("paragraphBody object does not contain 'sentence' key!")
+                return [], False
+            if "citations" not in sentence:
+                logging.error("paragraphBody object does not contain 'citations' key!")
+                return [], False
+            paragraph_body.append(sentence)
 
         parsed_content_list.append(
             (section_title, section_level, paragraph_body, citations)
         )
 
-    return parsed_content_list
+    return parsed_content_list, True
 
 
 def save_to_output(string_to_save: str, output_filepath: str):
@@ -88,11 +99,11 @@ def parse_latex():
     return ""
 
 
-def prepare_latex_string(input_object, template_string: str) -> str:
+def prepare_latex_string(input_object) -> str:
 
     result_string = ""
     for section_title, section_level, paragraph_body, citation_list in input_object:
-        template = Template(template_string)
+        template = Template(LatexTemplates.SECTION_TEMPLATE)
 
         formatted_string = ""
         if section_level == "1":

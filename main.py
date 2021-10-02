@@ -1,6 +1,8 @@
 import argparse
 import os
 import json
+import logging
+
 
 from utils import processing_pipeline
 
@@ -18,11 +20,11 @@ if __name__ == "__main__":
         default="./output.tex",
         help="Specifies the output file that will be created in supported format.",
     )
-
     args = parser.parse_args()
 
     input_filepath = args.input_file
     output_filepath = args.output_file
+
     with open(input_filepath, "r") as input_file:
         processing_pipeline(
             input_file=input_file,
