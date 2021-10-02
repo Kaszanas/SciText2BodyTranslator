@@ -1,0 +1,14 @@
+{
+    "content": [
+        {
+            "sectionName": "Test Section Name Here",
+            "sectionLevel": "1",
+            "paragraphBody": "This is a sample paragraph body text with some random citations",
+            "citations": [
+                "Bialecki2021",
+                "ArenaGamer2021",
+                "FollowIndyStarCraft2020"
+            ]
+        }
+    ]
+}
