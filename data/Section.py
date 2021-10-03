@@ -1,21 +1,26 @@
-from string_templates import LatexTemplates
+from data.string_templates import LatexTemplates
 from string import Template
 
-from Sentence import Sentence
+from data.Paragraph import Paragraph
 
 from typing import List
 
 
 class Section:
     def __init__(
-        self, section_title: str, section_level: int, section_body: List[Sentence]
+        self,
+        section_title: str,
+        section_level: int,
     ):
 
         self.section_title = section_title
         self.section_level = section_level
-        self.section_body = section_body
+        self.list_of_paragraphs = []
 
-        self.formatted_sentences = ""
+        self.formatted_paragraphs = ""
+
+    def add_paragraph(self, paragraph: Paragraph):
+        self.list_of_paragraphs.append(paragraph)
 
     def latex_format_section(self) -> str:
 
@@ -34,17 +39,17 @@ class Section:
             section_template = Template(LatexTemplates.SECTION_TEMPLATE_3)
 
         # Formatting sentences that can have interlocked citations:
-        self.__latex_format_sentences()
+        self.__latex_format_paragraphs()
 
         # Creating the final section string
         section_string = section_template.safe_substitute(
             section_title=self.section_title,
-            formatted_section_body=self.formatted_sentences,
+            formatted_section_body=self.formatted_paragraphs,
         )
 
         return section_string
 
-    def __latex_format_sentences(self):
+    def __latex_format_paragraphs(self):
 
-        for sentence in self.section_body:
-            self.formatted_sentences += sentence.latex_get_sentence()
+        for paragraph in self.list_of_paragraphs:
+            self.formatted_paragraphs += paragraph.latex_get_paragraph()
