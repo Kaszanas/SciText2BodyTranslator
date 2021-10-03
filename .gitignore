@@ -2,3 +2,5 @@ __pycache__/
 
 output.tex
 .vscode/
+
+__latexindent_temp.tex

@@ -1,7 +1,15 @@
 class LatexTemplates:
 
-    SECTION_TEMPLATE = """\section{$section_title}\n\n$paragraph_body\n\n"""
+    SECTION_TEMPLATE_1 = """\section{$section_title}\n\n$formatted_section_body\n\n"""
 
-    SUBSECTION_TEMPLATE = """\subsection{$section_title}\n\n$paragraph_body\n\n"""
+    SECTION_TEMPLATE_2 = (
+        """\subsection{$section_title}\n\n$formatted_section_body\n\n"""
+    )
 
-    SENTENCE_TEMPLATE = """$sentence \cite{$citation_string}"""
+    SECTION_TEMPLATE_3 = (
+        """\subsubsection{$section_title}\n\n$formatted_section_body\n\n"""
+    )
+
+    SENTENCE_TEMPLATE_CITATIONS = """$sentence \cite{$citation_string} """
+
+    SENTENCE_TEMPLATE_NO_CITATIONS = """$sentence """

@@ -4,6 +4,7 @@ from string import Template
 from typing import List
 
 from Document import Document
+from Sentence import Sentence
 from string_templates import LatexTemplates
 
 
@@ -16,18 +17,24 @@ def processing_pipeline(input_file, input_filepath: str, output_filepath: str):
 
     # Handling different input filetypes:
     if input_filepath.endswith(".json"):
-        processed_json = parse_json(input_file=input_file)
+        document_class, parsingOk = parse_json(input_file=input_file)
+        if not parsingOk:
+            return
     elif input_filepath.endswith(".md"):
         print("Currently not supported input filetype!")
-        processed_json = parse_markdown()
+        processed_json, parsingOk = parse_markdown()
+        if not parsingOk:
+            return
     elif input_filepath.endswith(".tex"):
         print("Currently not supported input filetype!")
-        processed_json = parse_latex()
+        processed_json, parsingOk = parse_latex()
+        if not parsingOk:
+            return
 
     # Handling different output filetypes:
     if output_filepath.endswith(".tex"):
-        # perform the function
-        string_to_save = prepare_latex_string(input_object=processed_json)
+        # perform the function:
+        string_to_save = document_class.latex_string()
         save_to_output(string_to_save, output_filepath)
     elif output_filepath.endswith(".md"):
         print("Output filetype not supported yet!")
@@ -39,8 +46,11 @@ def processing_pipeline(input_file, input_filepath: str, output_filepath: str):
         save_to_output(string_to_save, output_filepath)
 
 
-def parse_json(input_file):
+def latex_pipeline():
+    pass
 
+
+def parse_json(input_file):
     """
     parse_json uses json.load() to parse the input file and returns Python object.
     """
@@ -55,32 +65,37 @@ def parse_json(input_file):
 
         if "sectionTitle" not in section_object:
             logging.error("sectionTitle key not found in the input json!")
-            return [], False
+            return Document(), False
         section_title = section_object["sectionTitle"]
 
         if "sectionLevel" not in section_object:
             logging.error("sectionLevel key not found in the input json!")
-            return [], False
+            return Document(), False
         section_level = section_object["sectionLevel"]
 
-        if "paragraphBody" not in section_object:
-            logging.error("paragraphBody not found in the input json!")
-            return [], False
+        if "sectionBody" not in section_object:
+            logging.error("sectionBody not found in the input json!")
+            return Document(), False
 
         section_body = []
-        for sentence in section_object["paragraphBody"]:
-            if "sentence" not in sentence:
-                logging.error("paragraphBody object does not contain 'sentence' key!")
-                return [], False
+        for sentence in section_object["sectionBody"]:
+            if "sentenceText" not in sentence:
+                logging.error("sectionBody object does not contain 'sentenceText' key!")
+                return Document(), False
             if "citations" not in sentence:
-                logging.error("paragraphBody object does not contain 'citations' key!")
-                return [], False
-            section_body.append(sentence)
+                logging.error("sectionBody object does not contain 'citations' key!")
+                return Document(), False
+            section_body.append(
+                Sentence(
+                    sentence_text=sentence["sentenceText"],
+                    citation_list=sentence["citations"],
+                )
+            )
 
         document.add_section(
             section_title=section_title,
             section_level=section_level,
-            paragraph_body=section_body,
+            section_body=section_body,
         )
 
     return document, True
@@ -93,47 +108,8 @@ def save_to_output(string_to_save: str, output_filepath: str):
 
 
 def parse_markdown():
-    return ""
+    return Document(), False
 
 
 def parse_latex():
-    return ""
-
-
-def prepare_latex_string(document_class: Document) -> str:
-
-    result_string = ""
-    for section_title, section_level, paragraph_body, citation_list in document_class:
-        template = Template(LatexTemplates.SECTION_TEMPLATE)
-
-        formatted_string = ""
-        if section_level == "1":
-            citation_string = format_latex_citations(citation_list=citation_list)
-            formatted_string = template.safe_substitute(
-                section_title=section_title,
-                paragraph_body=paragraph_body,
-                citation_string=citation_string,
-            )
-
-            result_string += formatted_string
-
-    return result_string
-
-
-def format_latex_citations(citation_list: List) -> str:
-
-    citation_string = ""
-    for citation in citation_list:
-        citation_string += f"{citation}, "
-
-    citation_string = citation_string.rstrip(", ")
-
-    return citation_string
-
-
-def prepare_md_string(input_object) -> str:
-    return ""
-
-
-def prepare_json_string(input_object) -> str:
-    return ""
+    return Document(), False
