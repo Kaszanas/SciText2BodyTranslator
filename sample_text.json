@@ -39,6 +39,22 @@
                     ]
                 }
             ]
+        },
+        {
+            "sectionName": "string",
+            "sectionLevel": "int",
+            "sectionBody": [
+                {
+                    "paragraph": [
+                        {
+                            "sentenceText": "string",
+                            "citations": [
+                                "string"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

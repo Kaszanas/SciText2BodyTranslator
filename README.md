@@ -15,9 +15,38 @@ Currently available tools such as pandoc (markdown, LaTeX) with filters do not p
 
 ```
 {"content" : [
-    {"sectionName": string, "sectionLevel": int, "sectionBody": [{"sentenceText": string, "citations": [string]}]},
-    {"sectionName": string, "sectionLevel": int, "sectionBody": [{"sentenceText": string, "citations": [string]}]}
-    ...
+        {
+            "sectionName": "string",
+            "sectionLevel": "int",
+            "sectionBody": [
+                {
+                    "paragraph": [
+                        {
+                            "sentenceText": "string",
+                            "citations": [
+                                "string"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "sectionName": "string",
+            "sectionLevel": "int",
+            "sectionBody": [
+                {
+                    "paragraph": [
+                        {
+                            "sentenceText": "string",
+                            "citations": [
+                                "string"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }
 ```
