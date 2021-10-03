@@ -15,13 +15,21 @@ class Paragraph:
     def latex_get_paragraph(self):
         paragraph_template = Template(template=LatexTemplates.PARAGRAPH_TEMPLATE)
 
+        self.__latex_format_sentences()
+
         output_string = paragraph_template.safe_substitute(
             paragraph=self.formatted_sentences
-        )
+        ).rstrip(" ")
 
         return output_string
 
     def __latex_format_sentences(self):
 
+        pos = -1
         for sentence in self.sentences:
+            pos += 1
+            if pos == len(self.sentences) - 1:
+                self.formatted_sentences += sentence.latex_get_sentence().rstrip()
+                continue
+
             self.formatted_sentences += sentence.latex_get_sentence()

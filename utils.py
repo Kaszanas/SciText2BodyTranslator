@@ -80,24 +80,25 @@ def parse_json(input_file):
 
         section = Section(section_title=section_title, section_level=section_level)
 
-        for paragraph in section_level["sectionBody"]:
+        for paragraph_object in section_object["sectionBody"]:
+
             paragraph = Paragraph()
 
-            for sentence in paragraph:
-                if "sentenceText" not in sentence:
+            for sentence_object in paragraph_object["paragraph"]:
+                if "sentenceText" not in sentence_object:
                     logging.error(
-                        "sectionBody object does not contain 'sentenceText' key!"
+                        "sentence_object does not contain 'sentenceText' key!"
                     )
                     return Document(), False
-                if "citations" not in sentence:
+                if "citations" not in sentence_object:
                     logging.error(
-                        "sectionBody object does not contain 'citations' key!"
+                        "sentence_object object does not contain 'citations' key!"
                     )
                     return Document(), False
                 paragraph.add_sentence(
                     sentence=Sentence(
-                        sentence_text=sentence["sentenceText"],
-                        citation_list=sentence["citations"],
+                        sentence_text=sentence_object["sentenceText"],
+                        citation_list=sentence_object["citations"],
                     )
                 )
             section.add_paragraph(paragraph=paragraph)

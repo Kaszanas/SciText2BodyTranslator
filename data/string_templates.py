@@ -10,7 +10,7 @@ class LatexTemplates:
         """\subsubsection{$section_title}\n\n$formatted_section_body\n\n"""
     )
 
-    PARAGRAPH_TEMPLATE = """$paragraph \n"""
+    PARAGRAPH_TEMPLATE = """$paragraph\n"""
 
     SENTENCE_TEMPLATE_CITATIONS = """$sentence \cite{$citation_string} """
 

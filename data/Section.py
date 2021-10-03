@@ -39,7 +39,7 @@ class Section:
             section_template = Template(LatexTemplates.SECTION_TEMPLATE_3)
 
         # Formatting sentences that can have interlocked citations:
-        self.__latex_format_sentences()
+        self.__latex_format_paragraphs()
 
         # Creating the final section string
         section_string = section_template.safe_substitute(

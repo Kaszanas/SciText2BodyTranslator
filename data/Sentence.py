@@ -10,6 +10,7 @@ class Sentence:
         self.citation_list = citation_list
 
         self.formatted_sentence = ""
+        self.citation_string = ""
 
     def latex_get_sentence(self):
 
@@ -49,11 +50,11 @@ class Sentence:
         Returns:
             str: Returns a string of LaTeX citations.
         """
-        citation_string = ""
+
         if not self.citation_list == []:
             for citation in self.citation_list:
-                citation_string += f"{citation}, "
+                self.citation_string += f"{citation}, "
 
-            citation_string = citation_string.rstrip(", ")
+            self.citation_string = self.citation_string.rstrip(", ")
 
-        return citation_string
+        return self.citation_string
