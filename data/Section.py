@@ -1,21 +1,26 @@
-from string_templates import LatexTemplates
+from data.string_templates import LatexTemplates
 from string import Template
 
-from Sentence import Sentence
+from data.Paragraph import Paragraph
 
 from typing import List
 
 
 class Section:
     def __init__(
-        self, section_title: str, section_level: int, section_body: List[Sentence]
+        self,
+        section_title: str,
+        section_level: int,
     ):
 
         self.section_title = section_title
         self.section_level = section_level
-        self.section_body = section_body
+        self.list_of_paragraphs = []
 
         self.formatted_sentences = ""
+
+    def add_paragraph(self, paragraph: Paragraph):
+        self.list_of_paragraphs.append(paragraph)
 
     def latex_format_section(self) -> str:
 

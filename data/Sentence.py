@@ -1,7 +1,7 @@
 from typing import List
 from string import Template
 
-from string_templates import LatexTemplates
+from data.string_templates import LatexTemplates
 
 
 class Sentence:
