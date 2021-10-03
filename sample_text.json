@@ -5,21 +5,25 @@
             "sectionLevel": "1",
             "sectionBody": [
                 {
-                    "sentenceText": "This is a sample paragraph body text with some random citations.",
-                    "citations": [
-                        "Bialecki2021",
-                        "ArenaGamer2021",
-                        "FollowIndyStarCraft2020"
-                    ]
-                },
-                {
-                    "sentenceText": "This is another sentence without citations.",
-                    "citations": []
-                },
-                {
-                    "sentenceText": "And yet another one with citations.",
-                    "citations": [
-                        "Nastariel2021"
+                    "paragraph": [
+                        {
+                            "sentenceText": "This is a sample paragraph body text with some random citations.",
+                            "citations": [
+                                "Bialecki2021",
+                                "ArenaGamer2021",
+                                "FollowIndyStarCraft2020"
+                            ]
+                        },
+                        {
+                            "sentenceText": "This is another sentence without citations.",
+                            "citations": []
+                        },
+                        {
+                            "sentenceText": "And yet another one with citations.",
+                            "citations": [
+                                "Nastariel2021"
+                            ]
+                        }
                     ]
                 }
             ]
@@ -29,33 +33,15 @@
             "sectionLevel": "3",
             "sectionBody": [
                 {
-                    "sentenceText": "Yet another test subsection that will be used for testing.",
-                    "citations": []
-                },
-                {
-                    "sentenceText": "This time the first sentence is without citations",
-                    "citations": [
-                        "Bialecki2021"
-                    ]
-                }
-            ]
-        },
-        {
-            "sectionName": "string",
-            "sectionLevel": "int",
-            "sectionBody": [
-                {
                     "paragraph": [
                         {
-                            "sentenceText": "string",
-                            "citations": [
-                                "string"
-                            ]
+                            "sentenceText": "Yet another test subsection that will be used for testing.",
+                            "citations": []
                         },
                         {
-                            "sentenceText": "string",
+                            "sentenceText": "This time the first sentence is without citations",
                             "citations": [
-                                "string"
+                                "Bialecki2021"
                             ]
                         }
                     ]
