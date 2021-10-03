@@ -4,3 +4,5 @@ output.tex
 .vscode/
 
 __latexindent_temp.tex
+
+paper.json
