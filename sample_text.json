@@ -3,19 +3,41 @@
         {
             "sectionTitle": "Test Section Name Here",
             "sectionLevel": "1",
-            "paragraphBody": "This is a sample paragraph body text with some random citations.",
-            "citations": [
-                "Bialecki2021",
-                "ArenaGamer2021",
-                "FollowIndyStarCraft2020"
+            "sectionBody": [
+                {
+                    "sentenceText": "This is a sample paragraph body text with some random citations.",
+                    "citations": [
+                        "Bialecki2021",
+                        "ArenaGamer2021",
+                        "FollowIndyStarCraft2020"
+                    ]
+                },
+                {
+                    "sentenceText": "This is another sentence without citations.",
+                    "citations": []
+                },
+                {
+                    "sentenceText": "And yet another one with citations.",
+                    "citations": [
+                        "Nastariel2021"
+                    ]
+                }
             ]
         },
         {
-            "sectionTitle": "Another Test Section",
-            "sectionLevel": "1",
-            "paragraphBody": "Yet another test section that will be used for testing.",
-            "citations": [
-                "Bialecki2021"
+            "sectionTitle": "Another Test Subsection",
+            "sectionLevel": "3",
+            "sectionBody": [
+                {
+                    "sentenceText": "Yet another test subsection that will be used for testing.",
+                    "citations": []
+                },
+                {
+                    "sentenceText": "This time the first sentence is without citations",
+                    "citations": [
+                        "Bialecki2021"
+                    ]
+                }
             ]
         }
     ]
