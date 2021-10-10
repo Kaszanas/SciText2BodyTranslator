@@ -1,13 +1,10 @@
 import json
 import logging
-from string import Template
-from typing import List
 
 from data.Document import Document
 from data.Section import Section
 from data.Paragraph import Paragraph
 from data.Sentence import Sentence
-from data.string_templates import LatexTemplates
 
 
 def processing_pipeline(input_file, input_filepath: str, output_filepath: str):
